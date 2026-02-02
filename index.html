@@ -4,7 +4,8 @@
     visibility: hidden !important;
     opacity: 0 !important;
     background: #fff !important;
-    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
     transition: opacity 0.25s ease; /* モバイル環境でもふわっと表示させる */
   }
 </style>
@@ -1099,19 +1100,30 @@ TEL　047-407-1002　FAX　047-407-1002
 
 /* ===== 画面横スクロールの余白の出現予防 ===== */
 html, body {
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
   margin: 0;
   padding: 0;
-  height: auto;
+  height: auto !important;
+  position: static !important;
+}
+
+#fcc-page-root {
+  overflow: visible !important;
+}
+
+html.modal-open,
+body.modal-open {
+  overflow: hidden !important;
 }
 
 /* ===== ページ設定 ===== */
 body {
-  overscroll-behavior: none; /* Android Chrome 対応 */
+  overscroll-behavior: auto !important; /* Android Chrome 対応 */
 }
 
 body {
-  overscroll-behavior-y: contain; /* iOSでの慣性をやや抑制 */
+  overscroll-behavior-y: auto !important; /* iOSでの慣性をやや抑制 */
 }
 
 
@@ -6425,7 +6437,7 @@ document.addEventListener("DOMContentLoaded", function() {
     openBtn.addEventListener("click", function(e) {
       e.preventDefault();
       modal.style.display = "block";
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     });
   }
 
@@ -6433,14 +6445,14 @@ document.addEventListener("DOMContentLoaded", function() {
   if(closeBtn) {
     closeBtn.addEventListener("click", function() {
       modal.style.display = "none";
-      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
     });
   }
 
   modal.addEventListener("click", function(e) {
     if (e.target === modal) {
       modal.style.display = "none";
-      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
     }
   });
 
@@ -6517,7 +6529,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       modal.style.display = "none";
-      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
 
       setTimeout(() => {
         if (bookingModal) bookingModal.style.display = "block";
@@ -6537,14 +6549,14 @@ document.addEventListener("DOMContentLoaded", function() {
   if(openPrivacyLink){
     openPrivacyLink.addEventListener("click", function() {
       privacyModal.style.display = "block";
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     });
   }
 
   if(closePrivacyBtn){
     closePrivacyBtn.addEventListener("click", function() {
       privacyModal.style.display = "none";
-      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
     });
   }
 
@@ -6552,7 +6564,7 @@ document.addEventListener("DOMContentLoaded", function() {
     privacyModal.addEventListener("click", function(e){
       if(e.target === privacyModal){
         privacyModal.style.display = "none";
-        document.body.style.overflow = "";
+        document.body.classList.remove("modal-open");
       }
     });
   }
@@ -6567,7 +6579,7 @@ document.querySelectorAll('.mb-open-booking').forEach(function(btn) {
   btn.addEventListener('click', function(e) {
     e.preventDefault();
     document.getElementById('mb-booking-modal').style.display = 'block';
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add("modal-open");
   });
 });
 
@@ -6576,7 +6588,7 @@ document.querySelectorAll('.mb-open-document').forEach(function(btn) {
   btn.addEventListener('click', function(e) {
     e.preventDefault();
     document.getElementById('mb-document-modal').style.display = 'block';
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add("modal-open");
   });
 });
 </script>
