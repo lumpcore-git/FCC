@@ -182,7 +182,7 @@
         お問い合わせ・ご相談はこちら
       </button>
 
-      <button id="open-document-modal" class="fv-btn fv-right-btn">
+      <button id="open-document-modal" class="fv-btn fv-right-btn" data-button-position="top">
         資料をダウンロード<br>お見積りの依頼をする
       </button>
     </div>
@@ -247,7 +247,7 @@
       </div>
 
       <div style="text-align:center; margin-top:20px;">
-        <button type="button" id="download-btn" disabled style="background-color:gray; color:white; padding:10px 25px; border:none; border-radius:5px; cursor:not-allowed;">
+        <button type="button" id="download-btn-top" disabled style="background-color:gray; color:white; padding:10px 25px; border:none; border-radius:5px; cursor:not-allowed;" data-button-position="top">
           資料を請求する
         </button>
       </div>
@@ -922,7 +922,7 @@ TEL 047-407-1002 FAX 047-407-1002
 
     <div class="pc-contact-btns">
       <a id="open-booking" class="pc-contact-btn btn-blue"><span>お問い合わせ</span></a>
-      <a href="#" class="pc-contact-btn btn-pink"><span>資料をダウンロード<br>お見積りの依頼をする</span></a>
+      <a id="open-document-modal-bottom" href="#" class="pc-contact-btn btn-pink" data-button-position="bottom"><span>資料をダウンロード<br>お見積りの依頼をする</span></a>
     </div>
   </div>
 </section>
@@ -1021,7 +1021,7 @@ TEL 047-407-1002 FAX 047-407-1002
 
       <!-- ダウンロードボタン -->
       <div style="text-align:center; margin-top:20px;">
-        <button type="button" id="download-btn" disabled style="background-color:gray; color:white; padding:10px 25px; border:none; border-radius:5px; cursor:not-allowed;">
+        <button type="button" id="download-btn-bottom" disabled style="background-color:gray; color:white; padding:10px 25px; border:none; border-radius:5px; cursor:not-allowed;" data-button-position="bottom">
           資料を請求する
         </button>
       </div>
@@ -1508,7 +1508,8 @@ body {
 /* =========================== */
 /* ▼ ダウンロードボタン */
 /* =========================== */
-#download-btn {
+#download-btn-top,
+#download-btn-bottom {
   font-size: 16px;
   font-weight: 600;
   padding: 12px 25px;
@@ -1520,7 +1521,8 @@ body {
   border: none;
 }
 
-#download-btn:enabled {
+#download-btn-top:enabled,
+#download-btn-bottom:enabled {
   background-color: #007bff;
   color: #fff;
 }
@@ -3449,6 +3451,8 @@ body {
 // ▼ ボタンでモーダルを開く（左右入れ替え済み）
 // ===========================
 
+window.pcButtonPosition = window.pcButtonPosition || 'unknown';
+
 // 左ボタン「お問い合わせ・ご相談はこちら」 → お問い合わせフォーム（Microsoft Bookings）
 document.getElementById('open-booking-modal').addEventListener('click', function() {
     document.getElementById('booking-modal').style.display = 'block';
@@ -3456,6 +3460,7 @@ document.getElementById('open-booking-modal').addEventListener('click', function
 
 // 右ボタン「資料・お見積りの依頼をする」 → 資料請求フォーム
 document.getElementById('open-document-modal').addEventListener('click', function() {
+    window.pcButtonPosition = this.dataset.buttonPosition || 'top';
     document.getElementById('document-modal').style.display = 'block';
 });
 
@@ -3489,27 +3494,34 @@ document.getElementById('open-privacy-modal').addEventListener('click', function
 // ▼ チェックボックスで資料請求ボタン有効化
 // ===========================
 const privacyCheck = document.getElementById('privacy-check');
-const downloadBtn = document.getElementById('download-btn');
+const downloadBtns = document.querySelectorAll('#download-btn-top, #download-btn-bottom');
 
 privacyCheck.addEventListener('change', function() {
-    if (this.checked) {
-        downloadBtn.disabled = false;
-        downloadBtn.style.backgroundColor = '#6f5436';
-        downloadBtn.style.cursor = 'pointer';
-    } else {
-        downloadBtn.disabled = true;
-        downloadBtn.style.backgroundColor = 'gray';
-        downloadBtn.style.cursor = 'not-allowed';
-    }
+    downloadBtns.forEach(function(downloadBtn) {
+        if (privacyCheck.checked) {
+            downloadBtn.disabled = false;
+            downloadBtn.style.backgroundColor = '#6f5436';
+            downloadBtn.style.cursor = 'pointer';
+        } else {
+            downloadBtn.disabled = true;
+            downloadBtn.style.backgroundColor = 'gray';
+            downloadBtn.style.cursor = 'not-allowed';
+        }
+    });
 });
 
 // ===========================
 // ▼ 資料請求ボタン押下時の処理
 // ===========================
-downloadBtn.addEventListener('click', function() {
-    // ここにフォーム送信やダウンロード処理を記述
-    alert('資料請求が送信されました。');
-    document.getElementById('document-modal').style.display = 'none';
+downloadBtns.forEach(function(downloadBtn) {
+    downloadBtn.addEventListener('click', function() {
+        // ここにフォーム送信やダウンロード処理を記述
+        const buttonPosition = window.pcButtonPosition || this.dataset.buttonPosition || 'unknown';
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'document_request_click', button_position: buttonPosition });
+        alert('資料請求が送信されました。');
+        document.getElementById('document-modal').style.display = 'none';
+    });
 });
 </script>
 
@@ -3645,7 +3657,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
 document.addEventListener("DOMContentLoaded", function() {
  const form = document.getElementById("document-form");
- const downloadBtn = document.getElementById("download-btn");
+ const downloadBtns = document.querySelectorAll("#download-btn-top, #download-btn-bottom");
  const docModal = document.getElementById("document-modal");
  const bookingModal = document.getElementById("booking-modal");
  
@@ -3664,9 +3676,11 @@ document.addEventListener("DOMContentLoaded", function() {
    });
    if (privacyCheck) isValid = isValid && privacyCheck.checked;
  
-   downloadBtn.disabled = !isValid;
-   downloadBtn.style.backgroundColor = isValid ? "#e75480" : "gray";
-   downloadBtn.style.cursor = isValid ? "pointer" : "not-allowed";
+   downloadBtns.forEach(downloadBtn => {
+     downloadBtn.disabled = !isValid;
+     downloadBtn.style.backgroundColor = isValid ? "#e75480" : "gray";
+     downloadBtn.style.cursor = isValid ? "pointer" : "not-allowed";
+   });
  }
  
  requiredFields.forEach(name => {
@@ -3678,9 +3692,13 @@ document.addEventListener("DOMContentLoaded", function() {
  checkFormValidity();
  
  // ▼▼ フォーム送信 & ダウンロード処理
-downloadBtn.addEventListener("click", function(e) {
+downloadBtns.forEach(downloadBtn => downloadBtn.addEventListener("click", function(e) {
    e.preventDefault();
    if(downloadBtn.disabled) return;
+
+   const buttonPosition = window.pcButtonPosition || this.dataset.buttonPosition || "unknown";
+   window.dataLayer = window.dataLayer || [];
+   window.dataLayer.push({ event: "document_request_click", button_position: buttonPosition });
  
    const formData = new FormData(form);
  
@@ -3716,15 +3734,16 @@ downloadBtn.addEventListener("click", function(e) {
      console.error(error);
      alert("送信中にエラーが発生しました。時間を置いて再度お試しください。");
    });
- });
+ }));
  
  // モーダル開閉（資料請求）
- const openDocBtn = document.querySelector(".btn-pink");
+ const openDocBtn = document.getElementById("open-document-modal-bottom");
  const closeDocBtn = document.getElementById("close-document-modal");
  
  if(openDocBtn) {
   openDocBtn.addEventListener("click", function(e){
      e.preventDefault();
+     window.pcButtonPosition = this.dataset.buttonPosition || "bottom";
      docModal.style.display = "block";
    });
  }
@@ -3830,7 +3849,7 @@ downloadBtn.addEventListener("click", function(e) {
   <a class="mb-contact-btn btn-blue mb-open-booking">
     <span>お問い合わせ</span>
   </a>
-  <a class="mb-contact-btn btn-pink mb-open-document">
+  <a id="mb-open-document-top" class="mb-contact-btn btn-pink mb-open-document" data-button-position="top">
     <span>資料をダウンロード<br>お見積りの依頼をする</span>
   </a>
 
@@ -4373,7 +4392,7 @@ downloadBtn.addEventListener("click", function(e) {
       <a id="mb-open-booking" class="mb-contact-btn btn-blue" href="#">
         <span>お問い合わせ</span>
       </a>
-      <a id="mb-open-document" class="mb-contact-btn btn-pink" href="#">
+      <a id="mb-open-document-bottom" class="mb-contact-btn btn-pink mb-open-document" href="#" data-button-position="bottom">
         <span>資料をダウンロード<br>お見積りの依頼をする</span>
       </a>
     </div>
@@ -6422,7 +6441,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   /* ▼▼ モーダル要素 */
   const modal = document.getElementById("mb-document-modal");
-  const openBtn = document.getElementById("mb-open-document");
+  const openBtns = document.querySelectorAll(".mb-open-document");
+  let mbButtonPosition = "unknown";
   const closeBtn = document.getElementById("mb-close-document-modal");
   const bookingModal = document.getElementById("mb-booking-modal");
 
@@ -6449,13 +6469,14 @@ document.addEventListener("DOMContentLoaded", function() {
   const noteInput = document.getElementById("mb-note");
 
   /* ---------- モーダル開く ---------- */
-  if(openBtn) {
+  openBtns.forEach(function(openBtn) {
     openBtn.addEventListener("click", function(e) {
       e.preventDefault();
+      mbButtonPosition = this.dataset.buttonPosition || "unknown";
       modal.style.display = "block";
       document.body.classList.add("modal-open");
     });
-  }
+  });
 
   /* ---------- モーダル閉じる ---------- */
   if(closeBtn) {
@@ -6506,6 +6527,9 @@ document.addEventListener("DOMContentLoaded", function() {
   downloadBtn.addEventListener("click", function(e) {
     e.preventDefault();
     if (downloadBtn.disabled) return;
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "document_request_click", button_position: mbButtonPosition });
 
     // 送信データを作成
     const formData = new FormData();
@@ -6599,12 +6623,4 @@ document.querySelectorAll('.mb-open-booking').forEach(function(btn) {
   });
 });
 
-// ▼ 資料請求（複製ボタン対応）
-document.querySelectorAll('.mb-open-document').forEach(function(btn) {
-  btn.addEventListener('click', function(e) {
-    e.preventDefault();
-    document.getElementById('mb-document-modal').style.display = 'block';
-    document.body.classList.add("modal-open");
-  });
-});
 </script>
