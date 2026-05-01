@@ -213,9 +213,6 @@
       <label for="department">部署 <span style="color:red;">（必須）</span></label>
       <input type="text" name="department" id="department" placeholder="例：営業部" required>
 
-      <label for="position">役職 <span style="color:red;">（必須）</span></label>
-      <input type="text" name="position" id="position" placeholder="例：代表取締役 / 部長 / 課長 / 係長 / リーダー / 一般" required>
-
       <label for="email">メールアドレス <span style="color:red;">（必須）</span></label>
       <input type="email" name="email" id="email" placeholder="例：example@domain.com" required>
 
@@ -975,10 +972,6 @@ TEL 047-407-1002 FAX 047-407-1002
       <!-- ▼▼ 追加：部署 -->
       <label for="department">部署 <span style="color:red;">（必須）</span></label>
       <input type="text" name="department" id="department" placeholder="例：営業部" required>
-
-      <!-- ▼▼ 追加：役職 -->
-      <label for="position">役職 <span style="color:red;">（必須）</span></label>
-      <input type="text" name="position" id="position" placeholder="例：代表取締役 / 部長 / 課長 / 係長 / リーダー / 一般" required>
 
       <!-- メールアドレス -->
       <label for="email">メールアドレス <span style="color:red;">（必須）</span></label>
@@ -3665,7 +3658,7 @@ document.addEventListener("DOMContentLoaded", function() {
  const DOWNLOAD_URL = "https://lumpcore.co.jp/lc/wp/wp-content/uploads/2026/03/わたあめイベント概要資料.pdf";
  
  // 必須項目とプライバシーチェック
- const requiredFields = ['name','company','department','position','email','tel','source'];
+ const requiredFields = ['name','company','department','email','tel','source'];
  const privacyCheck = document.getElementById("privacy-check");
  
  // フォーム有効性チェック
@@ -4436,10 +4429,6 @@ downloadBtns.forEach(downloadBtn => downloadBtn.addEventListener("click", functi
 <!-- ▼▼ 部署 -->
 <label for="mb-department">部署 <span style="color:red;">（必須）</span></label>
 <input type="text" name="mb-department" id="mb-department" placeholder="例：営業部" required>
-
-<!-- ▼▼ 役職（テキスト入力に統一） -->
-<label for="mb-position">役職 <span style="color:red;">（必須）</span></label>
-<input type="text" name="mb-position" id="mb-position" placeholder="例：代表取締役 / 部長 / 課長 / 係長 / リーダー / 一般" required>
 
 <!-- ▼▼ メールアドレス -->
 <label for="mb-email">メールアドレス <span style="color:red;">（必須）</span></label>
