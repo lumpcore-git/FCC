@@ -129,14 +129,14 @@
 <header id="fcc-Menu">
   <nav class="fcc-nav" aria-label="目次メニュー">
     <ul>
-      <li><a href="#section1">ＦＣＣについて</a></li>
-      <li><a href="#section2">わたあめイベントとは？</a></li>
-      <li><a href="#section3">選ばれる３つの理由</a></li>
-      <li><a href="#section4">ご活用例</a></li>
-      <li><a href="#section5">イベントの流れ</a></li>
-      <li><a href="#section6">安全性について</a></li>
-      <li><a href="#section7">ＦＡＱ</a></li>
-      <li><a href="#section8">お問い合わせ</a></li>
+      <li><a href="#section1" data-menu="about">ＦＣＣについて</a></li>
+      <li><a href="#section2" data-menu="cotton_candy">わたあめイベントとは？</a></li>
+      <li><a href="#section3" data-menu="reason">選ばれる３つの理由</a></li>
+      <li><a href="#section4" data-menu="use_case">ご活用例</a></li>
+      <li><a href="#section5" data-menu="flow">イベントの流れ</a></li>
+      <li><a href="#section6" data-menu="safety">安全性について</a></li>
+      <li><a href="#section7" data-menu="faq">ＦＡＱ</a></li>
+      <li><a href="#section8" data-menu="contact">お問い合わせ</a></li>
     </ul>
   </nav>
 </header>
@@ -191,18 +191,18 @@
 
 
 <!-- =========================== -->
-<!-- ▼ 資料請求モーダル -->
+<!-- 【ＰＣ】 上部・資料請求モーダル -->
 <!-- =========================== -->
 <div id="document-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
 
   <div class="modal-inner" style="position:relative; width:90%; max-width:600px; height:auto; margin:5% auto; background:white; border-radius:12px; padding:30px; overflow-y:auto;">  
 
     <!-- 閉じるボタン -->
-    <button id="close-document-modal" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; cursor:pointer;">×</button>
+    <button id="close-document-modal" data-modal="modal2" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; cursor:pointer;">×</button>
 
     <h3 style="text-align:center; margin-bottom:20px;">資料請求フォーム</h3>
 
-    <form id="document-form" method="POST" action="https://script.google.com/macros/s/AKfycbyieF9YCBP38JnnMN1jznvbNPY4g9YiX_CM_ht9x3z7EzmtoHqy_j_a7jQlIAf7_nSV/exec">
+    <form id="document-form" method="POST" action="https://script.google.com/macros/s/AKfycbzhpKA8VU_jyVH9L2Yuo88yWdSv3vW0D893IV9ACdGkx6rpumn5uymGc4N-KMpzxFCD/exec">
 
       <label for="name">氏名 <span style="color:red;">（必須）</span></label>
       <input type="text" name="name" id="name" placeholder="例：山田 太郎" required>
@@ -212,6 +212,9 @@
 
       <label for="department">部署 <span style="color:red;">（必須）</span></label>
       <input type="text" name="department" id="department" placeholder="例：営業部" required>
+
+      <label for="position">役職 <span style="color:red;">（必須）</span></label>
+      <input type="text" name="position" id="position" placeholder="例：代表取締役 / 部長 / 課長 / 係長 / リーダー / 一般" required>
 
       <label for="email">メールアドレス <span style="color:red;">（必須）</span></label>
       <input type="email" name="email" id="email" placeholder="例：example@domain.com" required>
@@ -244,7 +247,7 @@
       </div>
 
       <div style="text-align:center; margin-top:20px;">
-        <button type="button" id="download-btn-top" disabled style="background-color:gray; color:white; padding:10px 25px; border:none; border-radius:5px; cursor:not-allowed;" data-button-position="top">
+        <button type="button" id="download-btn-top" data-button-id="document-download" disabled style="background-color:gray; color:white; padding:10px 25px; border:none; border-radius:5px; cursor:not-allowed;" data-button-position="top">
           資料を請求する
         </button>
       </div>
@@ -312,11 +315,11 @@ TEL 047-407-1002 FAX 047-407-1002
 
 
 <!-- =========================== -->
-<!-- ▼ お問い合わせモーダル（Microsoft Bookings） -->
+<!-- ▼ 上部・お問い合わせモーダル（Microsoft Bookings） -->
 <!-- =========================== -->
 <div id="booking-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
   <div style="position:relative; width:90%; max-width:800px; height:80%; margin:5% auto; background:white; border-radius:20px; overflow:hidden;">
-    <button id="close-booking-modal" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; cursor:pointer;">×</button>
+    <button id="close-booking-modal" data-modal="modal1" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; cursor:pointer;">×</button>
     <iframe src="https://outlook.office.com/book/Bookings9@lumpcore.co.jp/s/W3wmzHj580CoJsmEBBs27Q2?ismsaljsauthenabled" 
             style="width:100%; height:100%; border:none;"></iframe>
   </div>
@@ -598,12 +601,12 @@ TEL 047-407-1002 FAX 047-407-1002
   <div class="pc-accordion-content" id="pc-interview-content">
 
     <!-- アコーディオン展開／タイトル -->
-    <h3 class="pc-expansion-title">トヨタユナイテッド奈良株式会社</h3>
+    <h3 class="pc-expansion-title">トヨタユナイテッド奈良株式会社 様</h3>
 
     <!-- 説明文（ラップして固定幅・中央寄せ） -->
     <div class="pc-interview-text">
       <p class="pc-expansion-description">
-        奈良県のイオンモール内で開催された、トヨタユナイテッド奈良様のオリジナルイベント「チャウピーフェスティバル」にて、FCCのわたあめ作り体験イベントをご活用いただきました。店舗前の大型催事場に展示車を並べ、そのすぐ横にわたあめブースを設置。マスコットキャラクター「チャウピー」をモチーフにしたキャラクターわたあめを提供し、たくさんのご家族に“自分だけのチャウピーわたあめ作り”を楽しんでいただきました。
+        奈良県のイオンモール内で開催された、トヨタユナイテッド奈良株式会社様のオリジナルイベント「チャウピーフェスティバル」にて、FCCのわたあめ作り体験イベントをご活用いただきました。店舗前の大型催事場に展示車を並べ、そのすぐ横にわたあめブースを設置。マスコットキャラクター「チャウピー」をモチーフにしたキャラクターわたあめを提供し、たくさんのご家族に“自分だけのチャウピーわたあめ作り”を楽しんでいただきました。
       </p>
     </div>
 
@@ -935,11 +938,11 @@ TEL 047-407-1002 FAX 047-407-1002
 
 
 
-<!-- 【ＰＣ】お問い合わせフォーム・モーダル本体 -->
+<!-- 【ＰＣ】下部・お問い合わせフォーム・モーダル本体 -->
 <div id="booking-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
   <div style="position:relative; width:90%; max-width:800px; height:80%; margin:5% auto; background:white; border-radius:20px; overflow:hidden;">
     <!-- 閉じるボタン -->
-    <button id="close-booking-modal" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; cursor:pointer; z-index:10;">×</button>
+    <button id="close-booking-modal" data-modal="modal3" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; cursor:pointer; z-index:10;">×</button>
     <!-- iframeでMicrosoft Bookingsを埋め込む -->
     <iframe src="https://outlook.office.com/book/Bookings9@lumpcore.co.jp/s/W3wmzHj580CoJsmEBBs27Q2?ismsaljsauthenabled" 
             style="width:100%; height:100%; border:none;"></iframe>
@@ -949,17 +952,17 @@ TEL 047-407-1002 FAX 047-407-1002
 
 
 
-<!-- 【ＰＣ】資料請求フォーム・モーダル本体 -->
+<!-- 【ＰＣ】下部・資料請求フォーム・モーダル本体 -->
 <div id="document-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
 
   <div class="modal-inner">  
 
     <!-- 閉じるボタン -->
-    <button id="close-document-modal" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; cursor:pointer;">×</button>
+    <button id="close-document-modal" data-modal="modal4" style="position:absolute; top:10px; right:15px; font-size:24px; background:none; border:none; cursor:pointer;">×</button>
 
     <h3 style="text-align:center; margin-bottom:20px;">資料請求フォーム</h3>
 
-    <form id="document-form" method="POST" action="https://script.google.com/macros/s/AKfycbyieF9YCBP38JnnMN1jznvbNPY4g9YiX_CM_ht9x3z7EzmtoHqy_j_a7jQlIAf7_nSV/exec">
+    <form id="document-form" method="POST" action="https://script.google.com/macros/s/AKfycbzhpKA8VU_jyVH9L2Yuo88yWdSv3vW0D893IV9ACdGkx6rpumn5uymGc4N-KMpzxFCD/exec">
 
       <!-- ▼▼ 追加：氏名 -->
       <label for="name">氏名 <span style="color:red;">（必須）</span></label>
@@ -972,6 +975,10 @@ TEL 047-407-1002 FAX 047-407-1002
       <!-- ▼▼ 追加：部署 -->
       <label for="department">部署 <span style="color:red;">（必須）</span></label>
       <input type="text" name="department" id="department" placeholder="例：営業部" required>
+
+      <!-- ▼▼ 追加：役職 -->
+      <label for="position">役職 <span style="color:red;">（必須）</span></label>
+      <input type="text" name="position" id="position" placeholder="例：代表取締役 / 部長 / 課長 / 係長 / リーダー / 一般" required>
 
       <!-- メールアドレス -->
       <label for="email">メールアドレス <span style="color:red;">（必須）</span></label>
@@ -1014,7 +1021,7 @@ TEL 047-407-1002 FAX 047-407-1002
 
       <!-- ダウンロードボタン -->
       <div style="text-align:center; margin-top:20px;">
-        <button type="button" id="download-btn-bottom" disabled style="background-color:gray; color:white; padding:10px 25px; border:none; border-radius:5px; cursor:not-allowed;" data-button-position="bottom">
+        <button type="button" id="download-btn-bottom" data-button-id="document-download" disabled style="background-color:gray; color:white; padding:10px 25px; border:none; border-radius:5px; cursor:not-allowed;" data-button-position="bottom">
           資料を請求する
         </button>
       </div>
@@ -3658,7 +3665,7 @@ document.addEventListener("DOMContentLoaded", function() {
  const DOWNLOAD_URL = "https://lumpcore.co.jp/lc/wp/wp-content/uploads/2026/03/わたあめイベント概要資料.pdf";
  
  // 必須項目とプライバシーチェック
- const requiredFields = ['name','company','department','email','tel','source'];
+ const requiredFields = ['name','company','department','position','email','tel','source'];
  const privacyCheck = document.getElementById("privacy-check");
  
  // フォーム有効性チェック
@@ -4079,11 +4086,11 @@ downloadBtns.forEach(downloadBtn => downloadBtn.addEventListener("click", functi
 
   <div class="mb-accordion-content" id="mb-interview-content">
 
-    <h3 class="mb-expansion-title">トヨタユナイテッド奈良株式会社</h3>
+    <h3 class="mb-expansion-title">トヨタユナイテッド奈良株式会社 様</h3>
 
     <div class="mb-interview-text">
       <p class="mb-expansion-description">
-        奈良県のイオンモール内で開催された、トヨタユナイテッド奈良様のオリジナルイベント「チャウピーフェスティバル」にて、FCCのわたあめ作り体験イベントをご活用いただきました。店舗前の大型催事場に展示車を並べ、そのすぐ横にわたあめブースを設置。マスコットキャラクター「チャウピー」をモチーフにしたキャラクターわたあめを提供し、たくさんのご家族に“自分だけのチャウピーわたあめ作り”を楽しんでいただきました。
+        奈良県のイオンモール内で開催された、トヨタユナイテッド奈良株式会社様のオリジナルイベント「チャウピーフェスティバル」にて、FCCのわたあめ作り体験イベントをご活用いただきました。店舗前の大型催事場に展示車を並べ、そのすぐ横にわたあめブースを設置。マスコットキャラクター「チャウピー」をモチーフにしたキャラクターわたあめを提供し、たくさんのご家族に“自分だけのチャウピーわたあめ作り”を楽しんでいただきました。
       </p>
     </div>
 
@@ -4393,7 +4400,7 @@ downloadBtns.forEach(downloadBtn => downloadBtn.addEventListener("click", functi
 </section>
 
 
-<!-- ============================【MB】お問い合わせ（Microsoft Bookings）モーダル　============================ -->
+<!-- ============================【MB】下部・お問い合わせ（Microsoft Bookings）モーダル　============================ -->
 <div id="mb-booking-modal" class="mb-modal-overlay" style="display:none;">
   <div class="mb-modal-box">
     <button id="mb-close-booking-modal" class="mb-modal-close" aria-label="閉じる">×</button>
@@ -4409,14 +4416,14 @@ downloadBtns.forEach(downloadBtn => downloadBtn.addEventListener("click", functi
 </div>
 
 
-<!-- ============================【MB】資料請求フォーム モーダル　============================ -->
+<!-- ============================【MB】下部・資料請求フォーム モーダル　============================ -->
 <div id="mb-document-modal" class="mb-modal-overlay" style="display:none;">
   <div class="mb-modal-box mb-modal-box--form">
     <button id="mb-close-document-modal" class="mb-modal-close" aria-label="閉じる">×</button>
 
     <h3 style="text-align:center; margin-bottom:16px;">資料請求フォーム</h3>
 
-    <form id="mb-document-form" method="POST" action="https://script.google.com/macros/s/AKfycbyieF9YCBP38JnnMN1jznvbNPY4g9YiX_CM_ht9x3z7EzmtoHqy_j_a7jQlIAf7_nSV/exec">
+    <form id="mb-document-form" method="POST" action="https://script.google.com/macros/s/AKfycbzhpKA8VU_jyVH9L2Yuo88yWdSv3vW0D893IV9ACdGkx6rpumn5uymGc4N-KMpzxFCD/exec">
 
       <!-- ▼▼ 氏名 -->
 <label for="mb-name">氏名 <span style="color:red;">（必須）</span></label>
@@ -4429,6 +4436,10 @@ downloadBtns.forEach(downloadBtn => downloadBtn.addEventListener("click", functi
 <!-- ▼▼ 部署 -->
 <label for="mb-department">部署 <span style="color:red;">（必須）</span></label>
 <input type="text" name="mb-department" id="mb-department" placeholder="例：営業部" required>
+
+<!-- ▼▼ 役職（テキスト入力に統一） -->
+<label for="mb-position">役職 <span style="color:red;">（必須）</span></label>
+<input type="text" name="mb-position" id="mb-position" placeholder="例：代表取締役 / 部長 / 課長 / 係長 / リーダー / 一般" required>
 
 <!-- ▼▼ メールアドレス -->
 <label for="mb-email">メールアドレス <span style="color:red;">（必須）</span></label>
@@ -4485,7 +4496,7 @@ downloadBtns.forEach(downloadBtn => downloadBtn.addEventListener("click", functi
 
 
 
-<!-- ============================【MB】プライバシーポリシー モーダル ============================ -->
+<!-- ============================【MB】下部・プライバシーポリシー モーダル ============================ -->
 <div id="mb-privacy-modal" class="mb-modal-overlay" style="display:none;">
   <div class="mb-modal-box--privacy">
     <button id="mb-close-privacy-modal" class="mb-modal-close">×</button>
